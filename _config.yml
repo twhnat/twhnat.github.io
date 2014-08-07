@@ -1,7 +1,7 @@
 # Site settings
-title: Dr. Timothy W. Hnat
+title: Dr. Timothy W. Hnat - Assistant Professor
 email: hnat@timothyhnat.com
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+description: ""
 baseurl: ""
 url: "http://www.timothyhnat.com"
 twitter_username: timothy.hnat
@@ -10,3 +10,10 @@ github_username:  twhnat
 # Build settings
 markdown: kramdown
 permalink: pretty
+
+links:
+    -   title: Photography
+        url: http://photos.timothyhnat.com/
+
+    -   title: Publications
+        url: /publications/
