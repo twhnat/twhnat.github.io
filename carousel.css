@@ -94,6 +94,9 @@ body {
   letter-spacing: -1px;
 }
 
+.featurette-image-rounded {
+    border-radius: 15px;
+}
 
 
 /* RESPONSIVE CSS
