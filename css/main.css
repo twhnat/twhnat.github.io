@@ -408,3 +408,17 @@ a:visited { color: #205caa; }
     margin: 0 0 15px; }
 
 }
+
+.banner {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+    border-radius: 15px;
+}
+
+.col2 {
+
+    float: left;
+    margin-right: 15px;
+    border-radius: 5px;
+}
