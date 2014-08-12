@@ -101,6 +101,8 @@ body {
 
 .featurette-image-rounded {
     border-radius: 15px;
+    height: 400px;
+    width: auto;
 }
 
 
