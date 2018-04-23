@@ -57,6 +57,11 @@
 		box-sizing: border-box;
 	}
 
+	#pronounce {
+		text-align: center;
+	}
+
+
 /* Containers */
 
 	.container {
