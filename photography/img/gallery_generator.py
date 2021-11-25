@@ -17,7 +17,7 @@ images = []
 for file in os.listdir('./portfolio'):
     if 'thumbnail' not in file:
         f = Image.open("portfolio/" + file)
-        height,width = f.size
+        width,height = f.size
 
         images.append( (file, height, width) )
 
