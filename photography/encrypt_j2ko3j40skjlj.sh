@@ -1,1 +1,1 @@
-npx pagecrypt index.html index-protected.html hnatballroom
+npx pagecrypt main_page_index.html index.html nhthballroom
