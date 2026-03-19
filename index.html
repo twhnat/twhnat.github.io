@@ -1,634 +1,1333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Timothy Hnat, Ph.D.</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="css/animate.css">
-	<link rel="stylesheet" href="css/flexslider.css">
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
+  <title>Timothy Hnat, Ph.D.</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Timothy Hnat, Ph.D. — CTO & Co-founder at CuesHub. Software engineer specializing in embedded systems, cloud platforms, and mobile health.">
 
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X7WMY8TN14"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X7WMY8TN14');
+  </script>
 
-	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700" rel="stylesheet">
+  <style>
+    /* ─── DESIGN TOKENS ──────────────────────── */
+    :root {
+      --bg:         #0D1117;
+      --surface:    #161B22;
+      --surface2:   #1C2128;
+      --border:     #21262D;
+      --teal:       #2BB5C6;
+      --teal-dim:   rgba(43,181,198,0.12);
+      --teal-glow:  rgba(43,181,198,0.08);
+      --green:      #4CAF74;
+      --green-dim:  rgba(76,175,116,0.12);
+      --text:       #E6EDF3;
+      --muted:      #8B949E;
+      --mono:       'JetBrains Mono', monospace;
+      --sans:       'Inter', sans-serif;
+      --radius:     6px;
+    }
 
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-X7WMY8TN14"></script>
-	<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
+    /* ─── RESET ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--green); }
+    img { display: block; max-width: 100%; }
 
-	gtag('config', 'G-X7WMY8TN14');
-	</script>
+    /* ─── NAVBAR ─────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(13,17,23,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      user-select: none;
+    }
+    .nav-brand .t { color: var(--teal); }
+    .nav-brand .g { color: var(--green); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
 
+    /* ─── HERO ────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 2rem 5rem;
+    }
 
+    /* Dot grid */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(33,38,45,0.9) 1px, transparent 1px);
+      background-size: 28px 28px;
+      animation: gridShift 25s linear infinite;
+    }
+
+    /* Ambient glow */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 65% 55% at 25% 55%, rgba(43,181,198,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 45% at 75% 35%, rgba(76,175,116,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    @keyframes gridShift {
+      from { background-position: 0 0; }
+      to   { background-position: 28px 28px; }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-prompt {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--teal);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.15s;
+    }
+    .hero-prompt::before { content: '❯ '; opacity: 0.6; }
+
+    .hero-name {
+      font-family: var(--mono);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.3s;
+    }
+    .hero-name .hi { color: var(--teal); }
+
+    .hero-degree {
+      font-family: var(--mono);
+      font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+      color: var(--green);
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.45s;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-typewriter {
+      font-family: var(--mono);
+      font-size: clamp(0.85rem, 1.7vw, 1.05rem);
+      color: var(--muted);
+      min-height: 1.6em;
+      margin-bottom: 2.75rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.6s;
+    }
+    .hero-typewriter .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--teal);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.75s;
+    }
+
+    /* ─── BUTTONS ────────────────────────────── */
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--radius);
+      border: 1px solid;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: 0.04em;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-teal {
+      background: var(--teal-dim);
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+    .btn-teal:hover {
+      background: var(--teal);
+      color: var(--bg);
+      box-shadow: 0 4px 20px rgba(43,181,198,0.25);
+      color: #0D1117;
+    }
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--muted);
+    }
+    .btn-ghost:hover {
+      border-color: var(--muted);
+      color: var(--text);
+    }
+
+    /* ─── LAYOUT UTILITIES ───────────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    section { padding: 5.5rem 2rem; }
+
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--teal);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .section-eyebrow::before { content: '// '; opacity: 0.5; }
+
+    .section-heading {
+      font-family: var(--mono);
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3rem;
+    }
+    .section-heading .hi { color: var(--teal); }
+    .section-heading .gi { color: var(--green); }
+
+    /* ─── REVEAL ANIMATION ───────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── CUESHUB SPOTLIGHT ─────────────────── */
+    #current {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cueshub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .cueshub-mockup-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cueshub-mockup-wrap img {
+      border-radius: 12px;
+      filter: drop-shadow(0 16px 40px rgba(43,181,198,0.18));
+      transition: transform 0.3s ease;
+    }
+    .cueshub-mockup-wrap img:hover { transform: translateY(-4px); }
+    .cueshub-iphone { height: 280px; width: auto; }
+    .cueshub-watch  { height: 160px; width: auto; }
+    .cueshub-logo   { width: 220px; margin-bottom: 1.5rem; }
+    .cueshub-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid rgba(76,175,116,0.3);
+      padding: 0.22rem 0.8rem;
+      border-radius: 999px;
+      margin-bottom: 0.9rem;
+      letter-spacing: 0.06em;
+    }
+    .cueshub-live-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: livePulse 2.2s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.45; transform: scale(0.75); }
+    }
+    .cueshub-role {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--teal);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.85rem;
+    }
+    .cueshub-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+      max-width: 580px;
+    }
+
+    /* ─── TECH STACK ─────────────────────────── */
+    #stack { background: var(--bg); }
+    .stack-category-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-top: 1.75rem;
+      margin-bottom: 0.65rem;
+    }
+    .stack-category-label:first-child { margin-top: 0; }
+    .stack-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .chip {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: default;
+      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .chip:hover { transform: translateY(-2px); }
+    .chip.t:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+    .chip.g:hover { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+
+    /* ─── PROJECTS ───────────────────────────── */
+    #projects { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .project-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--green));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover {
+      border-color: rgba(43,181,198,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(43,181,198,0.09);
+    }
+    .project-card:hover::after { transform: scaleX(1); }
+
+    .proj-graphic {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .proj-graphic.contain {
+      object-fit: contain;
+      padding: 1rem;
+      background: var(--surface2);
+    }
+    .proj-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--teal);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .proj-name {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.7rem;
+    }
+    .proj-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.75;
+      flex: 1;
+      margin-bottom: 1.25rem;
+    }
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1.1rem;
+    }
+    .proj-tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 0.18rem 0.55rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--muted);
+    }
+    .proj-links {
+      display: flex;
+      gap: 1rem;
+    }
+    .proj-links a {
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .proj-links a:hover { color: var(--teal); }
+
+    /* More projects */
+    .expand-wrap { text-align: center; margin-bottom: 2rem; }
+    .expand-btn {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.5rem 1.5rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      letter-spacing: 0.05em;
+    }
+    .expand-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+    .more-section { display: none; }
+    .more-section.open { display: block; }
+
+    .filter-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .filter-pill {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+    }
+    .filter-pill.active,
+    .filter-pill:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: var(--teal-dim);
+    }
+
+    .study-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: 0.9rem;
+    }
+    .study-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .study-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+    .study-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: var(--surface2); padding: 1rem; }
+    .study-meta { padding: 0.6rem 0.75rem; }
+    .study-meta h4 { font-family: var(--mono); font-size: 0.76rem; color: var(--text); margin-bottom: 0.2rem; }
+    .study-meta .cat { font-size: 0.68rem; color: var(--teal); font-family: var(--mono); }
+
+    /* ─── ABOUT ──────────────────────────────── */
+    #about { background: var(--bg); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4.5rem;
+      align-items: start;
+    }
+    .about-photo-wrap {
+      position: relative;
+    }
+    .about-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 10px;
+      border: 1px solid rgba(43,181,198,0.25);
+      pointer-events: none;
+    }
+    .about-photo-wrap img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      filter: grayscale(15%) contrast(1.05);
+    }
+    .about-body p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
+    }
+    .about-body p:last-of-type { margin-bottom: 1.5rem; }
+    .pronounce-cmd {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .pronounce-cmd .prompt { color: var(--teal); }
+    .pronounce-cmd:hover { border-color: var(--teal); color: var(--teal); }
+    .pronounce-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+      opacity: 0.7;
+    }
+
+    /* ─── CV ─────────────────────────────────── */
+    #cv {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cv-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .cv-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .cv-col-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--green);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.75rem;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 1.75rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 6px; bottom: 6px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--teal) 0%, var(--green) 60%, transparent 100%);
+    }
+    .tl-item {
+      position: relative;
+      padding-bottom: 2.25rem;
+      padding-left: 1.25rem;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -1.75rem;
+      top: 7px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      border: 2px solid var(--surface);
+      box-shadow: 0 0 6px var(--teal);
+    }
+    .tl-item.edu::before { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .tl-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--teal);
+      margin-bottom: 0.2rem;
+    }
+    .tl-item.edu .tl-date { color: var(--green); }
+    .tl-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+    }
+    .tl-org {
+      font-family: var(--mono);
+      font-size: 0.77rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .tl-note {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.6;
+      opacity: 0.85;
+    }
+
+    /* ─── CONTACT ────────────────────────────── */
+    #contact { background: var(--bg); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.9rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .contact-row:hover { border-color: rgba(43,181,198,0.4); }
+    .contact-icon {
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--teal-dim);
+      border: 1px solid rgba(43,181,198,0.25);
+      border-radius: var(--radius);
+      color: var(--teal);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .contact-value {
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    .social-col-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--green);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.25rem;
+    }
+    .social-links { display: flex; flex-direction: column; gap: 0.75rem; }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: var(--surface);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .social-link:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: var(--teal-dim);
+    }
+    .social-handle { color: var(--muted); font-size: 0.75rem; margin-left: auto; }
+
+    /* ─── HOBBIES ────────────────────────────── */
+    #hobbies { background: var(--bg); }
+    .hobby-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .hobby-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .hobby-card:hover {
+      border-color: rgba(76,175,116,0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(76,175,116,0.09);
+    }
+    .hobby-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+      transition: filter 0.3s;
+    }
+    .hobby-card:hover .hobby-img { filter: grayscale(0%) contrast(1.1); }
+    .hobby-body {
+      padding: 1.25rem 1.5rem;
+    }
+    .hobby-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--green);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .hobby-name {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ─── FOOTER ─────────────────────────────── */
+    footer {
+      padding: 1.5rem 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    footer p {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────── */
+    @media (max-width: 900px) {
+      .cueshub-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .cueshub-mockup-wrap { order: -1; }
+      .cueshub-iphone { height: 200px; }
+      .cueshub-watch  { height: 120px; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo-wrap { max-width: 260px; }
+      .cv-columns { grid-template-columns: 1fr; gap: 2.5rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 56px; left: 0; right: 0;
+        background: rgba(13,17,23,0.97);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+        padding: 1.25rem 2rem;
+        gap: 1.1rem;
+      }
+      .nav-toggle { display: block; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .cv-header { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
 </head>
-<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+<body>
 
+<audio id="myName"><source src="res/hnat.mp3" type="audio/mpeg"></audio>
 
+<!-- ─── NAVBAR ─────────────────────────────────── -->
+<nav>
+  <div class="nav-brand">hnat<span class="g">.</span>dev</div>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation">&#9776;</button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#current">CuesHub</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#cv">CV</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-	<nav class="navbar navbar-expand-lg site-navbar navbar-light bg-light" id="pb-navbar">
+<!-- ─── HERO ───────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-prompt">init portfolio.js</div>
+    <h1 class="hero-name">Timothy<br><span class="hi">Hnat</span></h1>
+    <div class="hero-degree">Ph.D. Computer Science &nbsp;·&nbsp; University of Virginia</div>
+    <div class="hero-typewriter">
+      <span id="tw-text"></span><span class="cursor"></span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-teal">View Projects</a>
+      <a href="res/cv.pdf" class="btn btn-ghost" target="_blank">Download CV</a>
+      <a href="https://github.com/twhnat" class="btn btn-ghost" target="_blank">GitHub</a>
+    </div>
+  </div>
+</section>
 
-		<div class="container">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+<!-- ─── CUESHUB ─────────────────────────────────── -->
+<section id="current">
+  <div class="container">
+    <div class="cueshub-grid reveal">
+      <div>
+        <img src="https://cueshub.com/images/logo-full-dark.png" alt="CuesHub" class="cueshub-logo">
+        <div class="cueshub-live">
+          <span class="cueshub-live-dot"></span>
+          Currently Building
+        </div>
+        <div class="cueshub-role">Chief Technology Officer &amp; Co-founder &nbsp;·&nbsp; 2021 – Present</div>
+        <p class="cueshub-desc">
+          CuesHub delivers real-time calmness scores to Apple Watch and iPhone, built on 15+ years of NIH-funded biosignal research. Using heart rate variability and validated biomarkers, it gives people insight into their stress state before critical moments — helping them make better decisions, preserve mental energy, and reduce the long-term health impact of chronic stress.
+        </p>
+        <a href="https://cueshub.com" class="btn btn-teal" target="_blank">cueshub.com &nbsp;→</a>
+      </div>
+      <div class="cueshub-mockup-wrap">
+        <img src="https://cueshub.com/images/iphone-home-mockup.png" alt="CuesHub iPhone app" class="cueshub-iphone">
+        <img src="https://cueshub.com/images/watch.png" alt="CuesHub Apple Watch" class="cueshub-watch">
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ─── TECH STACK ──────────────────────────────── -->
+<section id="stack">
+  <div class="container">
+    <div class="section-eyebrow">expertise</div>
+    <h2 class="section-heading">Tech <span class="hi">Stack</span></h2>
 
-			<div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample09">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="#section-home">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-portfolio">Projects</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-about">About</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-resume">CV</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-contact">Contact</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+    <div class="reveal">
+      <div class="stack-category-label">Mobile &amp; Cross-platform</div>
+      <div class="stack-chips">
+        <span class="chip t">Swift</span>
+        <span class="chip t">Kotlin</span>
+        <span class="chip t">Flutter</span>
+        <span class="chip g">Android</span>
+        <span class="chip g">iOS</span>
+      </div>
 
+      <div class="stack-category-label">Backend &amp; APIs</div>
+      <div class="stack-chips">
+        <span class="chip t">Python</span>
+        <span class="chip t">FastAPI</span>
+        <span class="chip g">REST</span>
+        <span class="chip g">Pandas</span>
+        <span class="chip g">Kafka</span>
+      </div>
 
-	<audio id="myName">
-		 <source src="res/hnat.mp3">
-	</audio>
+      <div class="stack-category-label">Systems &amp; Infrastructure</div>
+      <div class="stack-chips">
+        <span class="chip t">Embedded Systems</span>
+        <span class="chip t">Wearable Sensors</span>
+        <span class="chip g">Cloud Platforms</span>
+        <span class="chip g">Docker</span>
+        <span class="chip g">Kubernetes</span>
+      </div>
 
-	<section class="site-hero" style="background-image: url(images/headshot.jpg);" id="section-home" data-stellar-background-ratio="0.5">
-		<div class="container">
-			<div class="row intro-text align-items-center justify-content-center">
-				<div class="col-md-10 text-center pt-5">
+      <div class="stack-category-label">Data &amp; Research</div>
+      <div class="stack-chips">
+        <span class="chip t">Signal Processing</span>
+        <span class="chip t">mHealth</span>
+        <span class="chip g">Apache Spark</span>
+        <span class="chip g">JITAI</span>
+        <span class="chip g">Big Data</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-					<h1 class="site-heading site-animate">Hello, I'm <strong class="d-block">Timothy Hnat</strong></h1>
-					<strong class="d-block text-white text-uppercase letter-spacing">Transforming lives with science, empathy, and signal</strong>
+<!-- ─── PROJECTS ────────────────────────────────── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-eyebrow">work</div>
+    <h2 class="section-heading">Featured <span class="hi">Projects</span></h2>
 
-				</div>
-			</div>
-		</div>
-	</section> <!-- section -->
+    <div class="featured-grid">
 
+      <div class="project-card reveal">
+        <div class="proj-eyebrow">NIH mHealth Center &nbsp;·&nbsp; 2020 – 2023</div>
+        <div class="proj-name">mDOT</div>
+        <p class="proj-desc">
+          NIH-funded center transforming health via temporally-precise mobile interventions. Led software architecture across three R&amp;D tracks: identifying critical moments of elevated health risk, applying reinforcement learning to optimize intervention timing, and expanding access to emerging biosignal biomarkers for remote patient care.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Android</span>
+          <span class="proj-tag">Wearables</span>
+          <span class="proj-tag">Reinforcement Learning</span>
+          <span class="proj-tag">JITAI</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://mdotcenter.org" target="_blank">mdotcenter.org &rarr;</a>
+          <a href="https://github.com/md2korg/" target="_blank">GitHub &rarr;</a>
+        </div>
+      </div>
 
-	<section class="site-section" id="section-portfolio">
-		<div class="container">
-			<div class="row">
-				<div class="section-heading text-center col-md-12">
-					<h3>What we spend our time on is probably the most important decision we make.</h3>
-				</div>
-			</div>
+      <div class="project-card reveal reveal-delay-1">
+        <div class="proj-eyebrow">NIH Center of Excellence &nbsp;·&nbsp; 2014 – 2023</div>
+        <div class="proj-name">MD2K</div>
+        <p class="proj-desc">
+          NIH Big Data to Knowledge Center of Excellence advancing biomedical discovery through mobile sensor data. Built end-to-end open-source infrastructure — from embedded sensor collection to population-scale analytics — enabling the P5 medicine vision (predictive, preventive, personalized, participatory, precision) across 20+ deployed clinical studies generating trillions of data points.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Android</span>
+          <span class="proj-tag">Kubernetes</span>
+          <span class="proj-tag">Open Source</span>
+          <span class="proj-tag">Scala</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/md2korg/" target="_blank">GitHub &rarr;</a>
+          <a href="https://md2k.org" target="_blank">md2k.org &rarr;</a>
+        </div>
+      </div>
 
-			<div class="row">
-				<div class="text-center col-md-12">
-					<h2><strong>Ray Kurzweil</strong></h2>
-				</div>
-			</div>
-		</div>
-	</section>
+      <div class="project-card reveal reveal-delay-2">
+        <div class="proj-eyebrow">Software &nbsp;·&nbsp; MD2K</div>
+        <div class="proj-name">mCerebrum</div>
+        <p class="proj-desc">
+          Flexible smartphone platform for mobile and wearable sensor data collection and real-time processing. Acts as the on-device OS for mobile health research — handling reliable high-frequency sensor management, data quality assurance, and intervention delivery. Funded by NIH, NSF, and IARPA; used across clinical deployments worldwide.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">Android</span>
+          <span class="proj-tag">Kotlin</span>
+          <span class="proj-tag">Java</span>
+          <span class="proj-tag">Wearables</span>
+          <span class="proj-tag">Real-time</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://mhealthhub.org/resources/digital-toolbox/" target="_blank">mHealthHub &rarr;</a>
+          <a href="https://github.com/md2korg/" target="_blank">GitHub &rarr;</a>
+        </div>
+      </div>
 
-	<section class="site-section" id="section-portfolio-current">
-		<div class="container">
-			<div class="row">
-				<div class="section-heading text-center col-md-12">
-					<img class="image img-fluid" src="images/logo-cueshub-horizontal-tm.png" alt="" style="height: 200px; width: auto; margin-left: auto; margin-right: auto;">
-					<h2>Chief Technology Officer and Co-founder</h2>
-				</div>
-			</div>
+      <div class="project-card reveal">
+        <div class="proj-eyebrow">Software &nbsp;·&nbsp; MD2K</div>
+        <div class="proj-name">Cerebral Cortex</div>
+        <p class="proj-desc">
+          The big-data cloud companion to mCerebrum. A Python-based framework for population-scale analysis of mobile sensor data — parallelizing computation across machines, providing pre-trained ML markers for stress detection and ECG quality, and supporting flexible storage backends. Bridges raw wearable data to actionable clinical insights.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Apache Spark</span>
+          <span class="proj-tag">Kafka</span>
+          <span class="proj-tag">Docker</span>
+          <span class="proj-tag">Kubernetes</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://mhealthhub.org/resources/digital-toolbox/" target="_blank">mHealthHub &rarr;</a>
+          <a href="https://github.com/md2korg/" target="_blank">GitHub &rarr;</a>
+        </div>
+      </div>
 
-			<div class="row">
-				<div class="text-center col-md-12">
-					<h2><strong>CuesHub seeks to help people live near the top end of their happiness potential by transforming the way they live, work, and interact with one another and do so while maintaining their privacy. </strong></h2>
-				</div>
-			</div>
-		</div>
-	</section>
+      <div class="project-card reveal reveal-delay-1">
+        <div class="proj-eyebrow">Research &nbsp;·&nbsp; Ph.D. Dissertation</div>
+        <div class="proj-name">SmartHome Localization</div>
+        <p class="proj-desc">
+          Ph.D. dissertation research at the University of Virginia: a system for tracking people in homes using ambient sensor fusion — no cameras, no wearables. Foundational work enabling occupancy-aware smart homes and in-home health monitoring. Laid the groundwork for subsequent mobile health sensing research.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">Embedded Systems</span>
+          <span class="proj-tag">Sensor Fusion</span>
+          <span class="proj-tag">C</span>
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">ML</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://dl.acm.org/doi/pdf/10.1145/2426656.2426687" target="_blank">ACM Paper &rarr;</a>
+        </div>
+      </div>
 
+    </div>
 
-	<section class="site-section" id="section-portfolio">
-		<div class="container">
-			<div class="row">
-				<div class="section-heading text-center col-md-12">
-					<h2>Prior <strong>Projects</strong></h2>
-				</div>
-			</div>
-			<div class="filters">
-				<ul>
-					<li class="active" data-filter="*">All</li>
-					<li data-filter=".centers">Centers</li>
-					<li data-filter=".software">Software</li>
-					<li data-filter=".projects">Projects</li>
-					<li data-filter=".passions">Passions</li>
-				</ul>
-			</div>
+    <!-- More / Research Studies and Projects -->
+    <div class="expand-wrap">
+      <button class="expand-btn" id="expand-btn" onclick="toggleMore()">+ Show Research Studies and Projects</button>
+    </div>
 
-			<div class="filters-content">
-				<div class="row grid">
+    <div class="more-section" id="more-section">
+      <div class="filter-row">
+        <button class="filter-pill active" data-filter="all">All</button>
+        <button class="filter-pill" data-filter="software">Software</button>
+        <button class="filter-pill" data-filter="project">Studies</button>
+      </div>
 
-					<!-- CENTERS -->
-					<div class="single-portfolio col-sm-4 all centers">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://github.com/md2korg/" class="img-pop-up">
-									<img class="image img-fluid" src="images/project-MD2K.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>MD2K</h4>
-							<div class="cat">Center</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all centers">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://github.com/md2korg/" class="img-pop-up">
-									<img class="image img-fluid" src="images/project-mDOT.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>mDOT</h4>
-							<div class="cat">Center</div>
-						</div>
-					</div>
+      <div class="study-grid" id="study-grid">
+        <div class="study-card" data-cat="software"><a href="https://mprov.md2k.org/" target="_blank"><img src="images/software-mprov.png" alt="mProv"><div class="study-meta"><h4>mProv</h4><div class="cat">Software</div></div></a></div>
+        <div class="study-card" data-cat="software"><a href="https://mcontain.md2k.org/" target="_blank"><img src="images/software-mcontain.png" alt="mContain"><div class="study-meta"><h4>mContain</h4><div class="cat">Software</div></div></a></div>
+        <div class="study-card" data-cat="software project"><a href="https://md2k.org/moods/" target="_blank"><img src="images/study-moods.png" alt="MOODS"><div class="study-meta"><h4>MOODS</h4><div class="cat">Software / Study</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-northwestern.png" alt="Smoking Cessation"><div class="study-meta"><h4>Smoking Cessation</h4><div class="cat">Northwestern</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-ohiostate.png" alt="CHF"><div class="study-meta"><h4>Congestive Heart Failure</h4><div class="cat">Ohio State</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://mperf.md2k.org/" target="_blank"><img src="images/study-minnesota.png" alt="Workplace Performance"><div class="study-meta"><h4>Workplace Performance</h4><div class="cat">Minnesota</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-utah.png" alt="Smoking Cessation SES"><div class="study-meta"><h4>Smoking Cessation (SES)</h4><div class="cat">Utah</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-rice.png" alt="Smoking Cessation AA"><div class="study-meta"><h4>Smoking Cessation (AA)</h4><div class="cat">Rice</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-vermont.png" alt="Smoking Cessation"><div class="study-meta"><h4>Smoking Cessation</h4><div class="cat">Vermont</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-moffitt.png" alt="Smoking Cessation"><div class="study-meta"><h4>Smoking Cessation</h4><div class="cat">Moffitt</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-ucla.png" alt="Oral Health"><div class="study-meta"><h4>Oral Health (ROBAS)</h4><div class="cat">UCLA</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-johnshopkins.png" alt="Cocaine Use"><div class="study-meta"><h4>Cocaine Use</h4><div class="cat">Johns Hopkins</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-johnshopkins.png" alt="Pain Management"><div class="study-meta"><h4>Pain Management</h4><div class="cat">Johns Hopkins</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-dartmouth.png" alt="Behavior Change"><div class="study-meta"><h4>Behavior Change</h4><div class="cat">Dartmouth</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-affectivescience.png" alt="Smoking Lapse"><div class="study-meta"><h4>Smoking Lapse</h4><div class="cat">Affective Science</div></div></a></div>
+        <div class="study-card" data-cat="project"><a href="https://md2k.org/projects/" target="_blank"><img src="images/study-mars.png" alt="Smoking Regulation"><div class="study-meta"><h4>Smoking Regulation</h4><div class="cat">MARS</div></div></a></div>
+      </div>
+    </div>
 
-					<!-- SOFTWARE -->
-					<div class="single-portfolio col-sm-4 all software">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://github.com/md2korg/" class="img-pop-up">
-									<img class="image img-fluid" src="images/software-mcerebrum.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>mCerebrum</h4>
-							<div class="cat">Software</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all software">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://github.com/md2korg/" class="img-pop-up">
-									<img class="image img-fluid" src="images/software-cerebralcortex.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Cerebral Cortex</h4>
-							<div class="cat">Software</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all software">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://mprov.md2k.org/" class="img-pop-up">
-									<img class="image img-fluid" src="images/software-mprov.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>mProv</h4>
-							<div class="cat">Software</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all software">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://mcontain.md2k.org/" class="img-pop-up">
-									<img class="image img-fluid" src="images/software-mcontain.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>mContain</h4>
-							<div class="cat">Software</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all software projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/moods/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-moods.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>MOODS</h4>
-							<div class="cat">Software/Project</div>
-						</div>
-					</div>
+  </div>
+</section>
 
+<!-- ─── ABOUT ────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid reveal">
+      <div class="about-photo-wrap">
+        <img src="images/headshot.jpg" alt="Timothy Hnat">
+      </div>
+      <div class="about-body">
+        <div class="section-eyebrow">about</div>
+        <h2 class="section-heading">About <span class="hi">Me</span></h2>
+        <p>I'm a software engineer and co-founder who has spent two decades building systems at the intersection of embedded hardware, cloud platforms, and mobile health. From the firmware layer up to population-scale analytics, I've shipped software that runs in real clinical deployments at 20+ research institutions.</p>
+        <p>Today I'm CTO and co-founder of CuesHub — translating 15+ years of NIH-funded biosignal research into a consumer product that gives people a real-time window into their stress state on Apple Watch and iPhone. It's the kind of work that only happens when you've spent years in the lab and can finally build the thing you always wished existed.</p>
+        <p>Before CuesHub I led software architecture for two NIH centers (MD2K and mDOT), building the open-source infrastructure that made wearable sensor research at scale possible. I still believe the most interesting problems are the ones that sit between disciplines.</p>
+        <button class="pronounce-cmd" onclick="document.getElementById('myName').play()">
+          <span class="prompt">$</span> pronounce("Hnat")
+        </button>
+        <p class="pronounce-note">My surname's origin traces back to a small farming town in Poland.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-					<!-- PROJECTS -->
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-northwestern.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Smoking Cessation</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-ohiostate.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Congestive Heart Failure</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://mperf.md2k.org/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-minnesota.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Workplace Performance</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-utah.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Smoking Cessation (SES)</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-rice.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Smoking Cessation (AA)</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-vermont.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Smoking Cessation</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-moffitt.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Smoking Cessation</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-ucla.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Oral Health (ROBAS)</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-johnshopkins.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Cocaine Use</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-johnshopkins.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Pain Management</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-dartmouth.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Behavior Change</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-affectivescience.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Smoking Lapse</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/study-mars.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Smoking Regulation	</h4>
-							<div class="cat">Projects</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all software projects">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<a href="https://md2k.org/projects/" class="img-pop-up">
-									<img class="image img-fluid" src="images/software-smarthome.png" alt="">
-								</a>
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Smarthome Localization</h4>
-							<div class="cat">Software/Projects</div>
-						</div>
-					</div>
+<!-- ─── HOBBIES ──────────────────────────────────── -->
+<section id="hobbies">
+  <div class="container">
+    <div class="section-eyebrow">outside the lab</div>
+    <h2 class="section-heading">Beyond the <span class="gi">Code</span></h2>
+    <div class="hobby-grid">
+      <div class="hobby-card reveal">
+        <img src="images/passion_ballroom.jpg" alt="Ballroom Dancing" class="hobby-img">
+        <div class="hobby-body">
+          <div class="hobby-label">Hobby</div>
+          <div class="hobby-name">Ballroom Dancing</div>
+        </div>
+      </div>
+      <div class="hobby-card reveal reveal-delay-1">
+        <img src="images/passion_photography.jpg" alt="Photography" class="hobby-img">
+        <div class="hobby-body">
+          <div class="hobby-label">Hobby</div>
+          <div class="hobby-name">Photography</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ─── CV ───────────────────────────────────────── -->
+<section id="cv">
+  <div class="container">
+    <div class="cv-header">
+      <div>
+        <div class="section-eyebrow">history</div>
+        <h2 class="section-heading" style="margin-bottom:0">Curriculum <span class="hi">Vitae</span></h2>
+      </div>
+      <a href="res/cv.pdf" class="btn btn-ghost" target="_blank">Download PDF</a>
+    </div>
 
-					<!-- PASSIONS -->
-					<div class="single-portfolio col-sm-4 all passions">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<!-- <a href="https://photos.timothyhnat.com/p967016207" class="img-pop-up"> -->
-									<img class="image img-fluid" src="images/passion_ballroom.jpg" alt="">
-								<!-- </a> -->
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Ballroom Dancing</h4>
-							<div class="cat">Passions</div>
-						</div>
-					</div>
+    <div class="cv-columns">
+      <div class="reveal">
+        <div class="cv-col-label">Experience</div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-date">2021 – Present</div>
+            <div class="tl-title">Chief Technology Officer &amp; Co-founder</div>
+            <div class="tl-org">CuesHub, PBC</div>
+            <div class="tl-note">Overlapped with mDOT and MD2K roles.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2020 – 2023</div>
+            <div class="tl-title">Chief Software Architect &amp; UofM Deputy Director</div>
+            <div class="tl-org">NIH mDOT Center</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2014 – 2023</div>
+            <div class="tl-title">Chief Software Architect</div>
+            <div class="tl-org">NIH MD2K Center of Excellence</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2011 – 2014</div>
+            <div class="tl-title">Assistant Professor</div>
+            <div class="tl-org">University of Memphis</div>
+            <div class="tl-note">Research: indoor tracking &amp; navigation, mobile health interventions, body sensor systems.</div>
+          </div>
+        </div>
+      </div>
 
-					<div class="single-portfolio col-sm-4 all passions">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<!-- <a href="https://photos.timothyhnat.com" class="img-pop-up"> -->
-									<img class="image img-fluid" src="images/passion_photography.jpg" alt="">
-								<!-- </a> -->
-							</div>
-						</div>
-						<div class="p-inner">
-							<h4>Photography</h4>
-							<div class="cat">Passions</div>
-						</div>
-					</div>
+      <div class="reveal reveal-delay-2">
+        <div class="cv-col-label">Education</div>
+        <div class="timeline">
+          <div class="tl-item edu">
+            <div class="tl-date">2006 – 2012</div>
+            <div class="tl-title">Ph.D. Computer Science</div>
+            <div class="tl-org">University of Virginia</div>
+            <div class="tl-note">Dissertation: A System for Tracking People in Homes for Smart Home Applications</div>
+          </div>
+          <div class="tl-item edu">
+            <div class="tl-date">2005 – 2006</div>
+            <div class="tl-title">M.Eng. Computer Engineering &amp; Computer Science</div>
+            <div class="tl-org">University of Louisville</div>
+            <div class="tl-note">Thesis: Software based deployment of encryption keys in wireless sensor networks.</div>
+          </div>
+          <div class="tl-item edu">
+            <div class="tl-date">2001 – 2005</div>
+            <div class="tl-title">B.S. Computer Engineering &amp; Computer Science</div>
+            <div class="tl-org">University of Louisville</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- .section -->
+<!-- ─── CONTACT ──────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="section-eyebrow">contact</div>
+    <h2 class="section-heading">Get In <span class="hi">Touch</span></h2>
 
+    <div class="contact-grid reveal">
+      <div>
+        <div class="contact-row">
+          <div class="contact-icon">✉</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:hnat@timothyhnat.com">hnat@timothyhnat.com</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">⌖</div>
+          <div>
+            <div class="contact-label">Location</div>
+            <div class="contact-value">Memphis, TN</div>
+          </div>
+        </div>
+      </div>
 
-		<section class="site-section" id="section-about">
-			<div class="container">
-				<div class="row mb-5 align-items-center">
-					<div class="col-lg-7 pr-lg-5 mb-5 mb-lg-0">
-						<img src="images/headshot.jpg" alt="Image placeholder" class="img-fluid">
-					</div>
-					<div class="col-lg-5 pl-lg-5">
-						<div class="section-heading">
-							<h2>About <strong>Me</strong></h2>
-						</div>
-						<p class="lead">I build open source software and technology to support reliable high-frequency data collection from mobile and wearable sensors to enable sensor-triggered just-in-time adaptive interventions.</p>
-						<p class="mb-5  "> This is coupled with an analytics cloud designed to facilitate mobile health data analytics and interventions that enables population-scale model development, training, and evaluation. It brings state-of-the-art research techniques and methodologies together in a single system to affect clinical outcomes. </p>
+      <div>
+        <div class="social-col-label">Elsewhere</div>
+        <div class="social-links">
+          <a href="https://github.com/twhnat" class="social-link" target="_blank">
+            GitHub
+            <span class="social-handle">@twhnat</span>
+          </a>
+          <a href="https://www.linkedin.com/in/timothyhnat" class="social-link" target="_blank">
+            LinkedIn
+            <span class="social-handle">timothyhnat</span>
+          </a>
+          <a href="https://twitter.com/TimothyHnat" class="social-link" target="_blank">
+            Twitter / X
+            <span class="social-handle">@TimothyHnat</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-						<div id="pronounce" class="style1">
-							<div class="row">
-								<div class="fa fa-play-circle fa-3x col-sm-2" onclick="document.getElementById('myName').play()"></div>
-								<div class="col-sm-9">My surname's origin can be traced back to a small farming town in Poland. </div>
-							</div>
-						</div>
-					</div>
-				</div>
+<!-- ─── FOOTER ───────────────────────────────────── -->
+<footer>
+  <p>Timothy Hnat, Ph.D. &nbsp;·&nbsp; Memphis, TN</p>
+  <p id="year"></p>
+</footer>
 
+<!-- ─── SCRIPTS ──────────────────────────────────── -->
+<script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-			</div>
-		</section>
+  // Typewriter
+  const roles = [
+    'CTO & Co-founder @ CuesHub',
+    'Software Engineer',
+    'Embedded Systems Architect',
+    'Cloud Platform Builder',
+    'Mobile Health Researcher',
+  ];
+  let ri = 0, ci = 0, del = false;
+  const tw = document.getElementById('tw-text');
+  function tick() {
+    const r = roles[ri];
+    if (!del) {
+      tw.textContent = r.slice(0, ++ci);
+      if (ci === r.length) { del = true; setTimeout(tick, 2200); return; }
+    } else {
+      tw.textContent = r.slice(0, --ci);
+      if (ci === 0) { del = false; ri = (ri + 1) % roles.length; }
+    }
+    setTimeout(tick, del ? 38 : 68);
+  }
+  tick();
 
-	<section class="site-section " id="section-resume">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 mb-5">
-					<div class="section-heading text-center">
-						<h2>My <strong>Curriculum Vitae</strong></h2><p>
-							<!-- <a href="#section-contact" class="btn btn-primary px-4 py-2 btn-sm smoothscroll">Hire Me</a> -->
-							<a href="res/cv.pdf" class="btn btn-secondary px-4 py-2 btn-sm">Download</a>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<h2 class="mb-5">Education</h2>
+  // Scroll reveal
+  const obs = new IntersectionObserver(
+    es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2006 - 2012</span>
-						<h3>Doctor of Philosophy in Computer Science</h3>
-						<p>Disseration: A System for Tracking People in Homes for Smart Home Applications</p>
-						<span class="school">University of Virginia</span>
-					</div>
+  // Nav toggle
+  function toggleNav() {
+    document.getElementById('nav-links').classList.toggle('open');
+  }
+  // Close nav on link click (mobile)
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open'));
+  });
 
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2005 - 2006</span>
-						<h3>Master of Engineering in Computer Engineering and Computer Science</h3>
-						<p>Thesis: Software based deployment of encryption keys in wireless sensor networks.</p>
-						<span class="school">University of Louisville</span>
-					</div>
+  // More projects toggle
+  function toggleMore() {
+    const sec = document.getElementById('more-section');
+    const btn = document.getElementById('expand-btn');
+    sec.classList.toggle('open');
+    btn.textContent = sec.classList.contains('open') ? '− Hide Research Studies and Projects' : '+ Show Research Studies and Projects';
+  }
 
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2001 - 2005</span>
-						<h3>Bachelor of Science in Computer Engineering and Computer Science</h3>
-						<!-- <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p> -->
-						<span class="school">University of Louisville</span>
-					</div>
+  // Filter pills
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const f = pill.dataset.filter;
+      document.querySelectorAll('.study-card').forEach(card => {
+        const c = card.dataset.cat || '';
+        card.style.display = (f === 'all' || c.includes(f)) ? '' : 'none';
+      });
+    });
+  });
+</script>
 
-				</div>
-				<div class="col-md-6">
-
-
-					<h2 class="mb-5">Experience</h2>
-					
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2023 - Present</span>
-						<h3>Chief Technology Officer and Co-founder</h3>
-						<!-- <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p> -->
-						<span class="school">CuesHub, PBC. (A Delaware Public Benefit Corporation)</span>
-					</div>
-
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2020 - 2023</span>
-						<h3>Chief Software Architect and UofM Deputy Director</h3>
-						<!-- <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p> -->
-						<span class="school">NIH mHealth Center for Discovery, Optimization, and Translation of Temporally-Precise Interventions (mDOT)</span>
-					</div>
-
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2011 - 2023</span>
-						<h3>Chief Software Architect</h3>
-						<!-- <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p> -->
-						<span class="school">NIH Center of Excellence for Mobile Sensor Data-to-Knowledge (MD2K)</span>
-					</div>
-
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2011 - 2014</span>
-						<h3>Assistant Professor</h3>
-						<p>My research focused on indoor tracking and navigation systems, mobile health interventions, and body sensor systems.</p>
-						<span class="school">University of Memphis</span>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</section> <!-- .section -->
-
-
-	<section class="site-section" id="section-contact">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-5 pl-md-5">
-					<h3 class="mb-5">My Contact Details</h3>
-					<ul class="site-contact-details">
-						<li>
-							<span class="text-uppercase text-white">Email</span>
-							<a class="text-white-50" href="mailto:hnat@timothyhnat.com">hnat@timothyhnat.com</a>
-						</li>
-						<li>
-							<span class="text-uppercase text-white">Location</span>
-							Memphis, TN <br>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</section>
-
-
-	<footer class="site-footer">
-		<div class="container">
-
-			<div class="row mb-5">
-				<p class="col-12 text-center">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true" ></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				</p>
-			</div>
-
-			<div class="row mb-5">
-				<div class="col-md-12 text-center">
-					<p>
-						<a href="https://twitter.com/TimothyHnat" class="social-item"><span class="icon-twitter"></span></a>
-						<a href="https://www.linkedin.com/in/timothyhnat" class="social-item"><span class="icon-linkedin2"></span></a>
-					</p>
-				</div>
-			</div>
-
-		</div>
-	</footer>
-
-
-
-
-	<script src="js/vendor/jquery.min.js"></script>
-	<script src="js/vendor/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/vendor/popper.min.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-
-	<script src="js/vendor/jquery.easing.1.3.js"></script>
-
-	<script src="js/vendor/jquery.stellar.min.js"></script>
-	<script src="js/vendor/jquery.waypoints.min.js"></script>
-
-	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
-	<script src="js/custom.js"></script>
-
-	<!-- Google Map -->
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    	<script src="js/google-map.js"></script> -->
-
-    </body>
-    </html>
+</body>
+</html>
